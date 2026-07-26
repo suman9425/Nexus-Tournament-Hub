@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 
-// Dummy Pages (पछि तपाईंले यसलाई वास्तविक पेजले रिप्लेस गर्नुपर्छ)
+// Dummy Pages--will be replaced by real page in the future
 const Home = () => <div>Home Page - Open to All</div>;
 const Login = () => <div>Login Page</div>;
 const PlayerDashboard = () => <div>Player Dashboard</div>;

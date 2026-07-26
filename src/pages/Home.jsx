@@ -29,10 +29,14 @@ const featuredTournamentsData = [
     id: 1,
     title: "Champions Cup",
     game: "VALORANT",
-    image: "/Champions Cup.png", // 🖼️ यहाँ आफ्नो टूर्नामेन्टको छुट्टै फोटो राख्नुहोस्
+    image: "/Champions Cup.png", 
     prize: "$5,000",
     players: "128/128",
-    status: "LIVE"
+    status: "LIVE",
+    format: "5v5",
+    entry: "Free",
+    date: "Today, 18:00",
+    description: "The ultimate Valorant showdown. Gather your squad and compete for the massive prize pool in this high-stakes tournament."
   },
   {
     id: 2,
@@ -41,7 +45,11 @@ const featuredTournamentsData = [
     image: "/Winter League.png",
     prize: "$3,200",
     players: "44/64",
-    status: "UPCOMING"
+    status: "UPCOMING",
+    format: "5v5",
+    entry: "$10/Team",
+    date: "Aug 15, 2026",
+    description: "Gear up for the Winter League. Show off your precise aim and tactical execution in CS2."
   },
   {
     id: 3,
@@ -50,7 +58,11 @@ const featuredTournamentsData = [
     image: "/Underlords Series.png", 
     prize: "$8,000",
     players: "80/80",
-    status: "LIVE"
+    status: "LIVE",
+    format: "5v5",
+    entry: "Invite Only",
+    date: "Ongoing",
+    description: "Top tier Dota 2 action featuring the best teams from around the region battling for supremacy."
   },
   {
     id: 4,
@@ -59,7 +71,11 @@ const featuredTournamentsData = [
     image: "/Rift Rivals.png",
     prize: "$4,500",
     players: "96/100",
-    status: "UPCOMING"
+    status: "UPCOMING",
+    format: "5v5",
+    entry: "Free",
+    date: "Aug 20, 2026",
+    description: "Enter the Summoner's Rift and prove your dominance. Only the strongest will survive the Rift Rivals."
   }
 ];
 
@@ -111,7 +127,7 @@ function Home() {
         <span><b>Valorant Champions Cup</b> — Round 3 live now &nbsp;•&nbsp; <b>128</b> players competing &nbsp;•&nbsp; Next match starts in 14:02</span>
       </div>
 
-      {/* 🌟 HERO SECTION */}
+      {/* HERO SECTION */}
       <section className="hero relative z-10" style={{ display: 'flex', alignItems: 'center', padding: '4rem 5%', minHeight: '80vh' }}>
         
         <div className="hero-grid"></div>
@@ -163,7 +179,7 @@ function Home() {
         </div>
       </section>
 
-      {/*FEATURED TOURNAMENTS */}
+      {/* FEATURED TOURNAMENTS */}
       <section className="section relative z-10">
         <div className="section-head">
           <div>
@@ -178,8 +194,6 @@ function Home() {
             <div key={tourney.id} className="t-card">
               
               <div className="t-card-banner relative overflow-hidden flex justify-between items-start bg-gray-800">
-                
-                
                 <img 
                   src={tourney.image} 
                   alt={tourney.game} 
@@ -202,7 +216,10 @@ function Home() {
                   <div>Prize<b>{tourney.prize}</b></div>
                   <div>Players<b>{tourney.players}</b></div>
                 </div>
-                <button className="btn btn-primary">View Tournament</button>
+                {/* 🔗 This links to the standalone TournamentDetails page */}
+                <Link to={`/tournaments/${tourney.id}`} className="w-full block">
+                  <button className="btn btn-primary" style={{ width: '100%' }}>View Tournament</button>
+                </Link>
               </div>
               
             </div>

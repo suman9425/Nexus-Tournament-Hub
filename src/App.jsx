@@ -8,6 +8,7 @@ import CreateAccount from './pages/Auth/CreateAccount';
 import Tournaments from './pages/Tournaments';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import TournamentDetails from './pages/TournamentDetails';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/tournaments/:id" element={<TournamentDetails />} />
       </Routes>
     </BrowserRouter>
   );

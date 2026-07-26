@@ -5,9 +5,33 @@ import NexusLogo from '../components/common/NexusLogo';
 
 // --- MOCK DATA ---
 const mockTournaments = [
-  { id: 1, name: "Valorant Masters 2026", game: "VALORANT", prize: "$5,000", participants: "16/32", status: "Upcoming", bg: "linear-gradient(135deg,#3B82F6,#22C55E)" },
-  { id: 2, name: "CS2 Championship", game: "CS2", prize: "$2,500", participants: "8/16", status: "Registration Open", bg: "linear-gradient(135deg,#F59E0B,#3B82F6)" },
-  { id: 3, name: "Dota 2 Weekly Clash", game: "DOTA 2", prize: "$1,000", participants: "32/32", status: "Ongoing", bg: "linear-gradient(135deg,#EF4444,#7C3AED)" },
+  { 
+    id: 1, 
+    name: "Valorant Masters 2026", 
+    game: "VALORANT", 
+    prize: "$5,000", 
+    participants: "16/32", 
+    status: "Upcoming", 
+    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800" 
+  },
+  { 
+    id: 2, 
+    name: "CS2 Championship", 
+    game: "CS2", 
+    prize: "$2,500", 
+    participants: "8/16", 
+    status: "Registration Open", 
+    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=800"
+  },
+  { 
+    id: 3, 
+    name: "Dota 2 Weekly Clash", 
+    game: "DOTA 2", 
+    prize: "$1,000", 
+    participants: "32/32", 
+    status: "Ongoing", 
+    image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&q=80&w=800"
+  },
 ];
 
 const Tournaments = () => {
@@ -52,21 +76,46 @@ const Tournaments = () => {
         <div className="card-grid">
           {displayTournaments.map((tournament) => (
             <div key={tournament.id} className="t-card">
-              <div className="t-card-banner" style={{ background: tournament.bg }}>
-                <span className={`status-badge ${tournament.status === 'Ongoing' ? 'status-live' : 'status-upcoming'}`}>
-                  <span className="sdot"></span>{tournament.status.toUpperCase()}
-                </span>
-                <span className="game-tag">{tournament.game}</span>
+              
+              {/* IMAGE BANNER SECTION */}
+              <div className="t-card-banner relative overflow-hidden" style={{ minHeight: '160px', padding: '15px' }}>
+                
+                {/* Clear Image with no gradient, aligned to top */}
+                {tournament.image && (
+                  <img 
+                    src={tournament.image} 
+                    alt={tournament.name}
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                    style={{ zIndex: 0 }}
+                  />
+                )}
+                
+                {/* Badges - Kept above the image using z-index */}
+                <div className="relative z-10 flex justify-between items-start">
+                  <span className={`status-badge ${tournament.status === 'Ongoing' ? 'status-live' : 'status-upcoming'}`}>
+                    <span className="sdot"></span>{tournament.status.toUpperCase()}
+                  </span>
+                  {/* A slightly dark background has been placed in the game tag so that the text can be read clearly even on a clear image */}
+                  <span className="game-tag bg-black/60 text-white px-2 py-1 rounded text-xs font-bold backdrop-blur-sm">
+                    {tournament.game}
+                  </span>
+                </div>
+
               </div>
+
               <div className="t-card-body">
                 <h4>{tournament.name}</h4>
                 <div className="t-card-meta">
                   <div>Prize<b>{tournament.prize}</b></div>
                   <div>Players<b>{tournament.participants}</b></div>
                 </div>
-                <button className="btn btn-secondary" style={{ width: '100%', marginTop: '15px' }}>
-                  View Details
-                </button>
+                
+                <Link to={`/tournaments/${tournament.id}`} className="block w-full">
+                  <button className="btn btn-secondary" style={{ width: '100%', marginTop: '15px' }}>
+                    View Details
+                  </button>
+                </Link>
+                
               </div>
             </div>
           ))}
