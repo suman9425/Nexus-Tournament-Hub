@@ -106,7 +106,7 @@ function Home() {
         <div className="nav-links">
           <Link className="active" to="/">Home</Link>
           <Link to="/tournaments">Tournaments</Link>
-          <a href="#">Games</a>
+          <Link to="/games">Games</Link>
           <a href="#">Leaderboard</a>
           <a href="#">About</a>
         </div>
@@ -154,15 +154,8 @@ function Home() {
           </div>
 
           <div className="flex-1 w-full relative h-[400px] md:h-[550px] flex items-center justify-center mt-10 lg:mt-0">
-            <div 
-              className="relative w-full h-full max-w-2xl overflow-hidden"
-              style={{
-                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
-                WebkitMaskComposite: 'destination-in',
-                maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
-                maskComposite: 'intersect'
-              }}
-            >
+            {/* यहाँबाट maskImage हटाइएको छ र rounded corners सँगै shadow राखिएको छ */}
+            <div className="relative w-full h-full max-w-2xl overflow-hidden rounded-2xl shadow-2xl border border-gray-800">
               {sliderImages.map((img, idx) => (
                 <img 
                   key={idx}

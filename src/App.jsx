@@ -9,6 +9,7 @@ import Tournaments from './pages/Tournaments';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import TournamentDetails from './pages/TournamentDetails';
+import Games from './pages/Games';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/tournaments/:id" element={<TournamentDetails />} />
+        <Route path="/games" element={<Games />} />
       </Routes>
     </BrowserRouter>
   );
