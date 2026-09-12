@@ -1,34 +1,51 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import NexusLogo from '../../components/common/NexusLogo';
-import { getNames } from 'country-list';
 
-const Signup = () => {
-  const [country, setCountry] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [year, setYear] = useState('');
+const CreateAccount = () => {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  
   const navigate = useNavigate();
 
-  const countries = getNames();
-
-  const handleContinue = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!country || !month || !day || !year) {
-      setError('Please fill out all fields before continuing.');
+    if (!fullName || !email || !password || !confirmPassword) {
+      setError('Please fill out all fields.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
       return;
     }
 
     setError('');
-    navigate('/create-account');
+    console.log('Account Created:', { fullName, email, password });
+    navigate('/dashboard');
+  };
+
+  // Input ko lagi common inline style (left-right padding ko lagi)
+  const inputStyle = {
+    paddingLeft: '24px',
+    paddingRight: '24px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
   };
 
   return (
     <div className="min-h-screen bg-[#050B14] text-white flex flex-col relative overflow-hidden font-['Inter']">
       
-      {/* LIVE ANIMATED BACKGROUND */}
+      {/* BACKGROUND */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute w-full h-[120%] -top-[10%] live-grid-bg animate-grid-move"></div>
         <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-700/20 blur-[120px] rounded-full animate-float-slow"></div>
@@ -39,72 +56,86 @@ const Signup = () => {
         <NexusLogo className="scale-90" />
       </header>
 
-      <main className="flex-1 flex items-center justify-center p-4 relative z-10 w-full">
+      <main className="flex-1 flex items-center justify-center px-8 md:px-16 relative z-10 w-full">
+        
         <div className="w-full max-w-[460px] p-10 rounded-[28px] bg-[#0F172A]/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl flex flex-col items-center">
           
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white">Welcome to Nexus Core</h1>
-            <p className="text-gray-400 text-sm mt-2">Before we begin, please select your country of residence</p>
+          <div className="text-center mb-10">
+            <h1 className="text-3xl font-bold text-white">Create an Account</h1>
+            <p className="text-gray-400 text-sm mt-3">Join Nexus Core to get started</p>
           </div>
 
-          <form onSubmit={handleContinue} className="flex flex-col gap-6 w-full px-6">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-7 w-full">
             
-            {/* Country Selection */}
-            <div className="w-full">
-              <label className="block text-xs font-bold text-gray-400 mb-2">COUNTRY OF RESIDENCE *</label>
-              <select 
-                className="w-full px-4 py-3.5 rounded-xl bg-[#0B1120] border border-gray-700 text-white focus:border-purple-500 outline-none transition-all"
-                onChange={(e) => setCountry(e.target.value)}
-                value={country}
-              >
-                <option value="">Select a country</option>
-                {countries.map((name) => (
-                  <option key={name} value={name}>{name}</option>
-                ))}
-              </select>
+            {/* Full Name */}
+            <div className="w-full flex flex-col">
+              <label className="block text-xs font-bold text-gray-400 mb-2.5">FULL NAME *</label>
+              <input 
+                type="text" 
+                placeholder="Enter your full name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                style={inputStyle}
+                className="w-full rounded-xl bg-[#0B1120] border border-gray-700 text-sm text-white placeholder:text-sm placeholder:text-gray-500 focus:border-purple-500 outline-none transition-all box-border"
+              />
             </div>
 
-            {/* Date of Birth Selection */}
-            <div className="w-full">
-              <label className="block text-xs font-bold text-gray-400 mb-2">DATE OF BIRTH *</label>
-              <div className="grid grid-cols-3 gap-3">
-                <select 
-                  className="px-2 py-3.5 rounded-xl bg-[#0B1120] border border-gray-700 text-white text-center outline-none focus:border-purple-500"
-                  value={month}
-                  onChange={(e) => setMonth(e.target.value)}
-                >
-                  <option value="">Month</option>
-                  {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map(m => <option key={m} value={m}>{m}</option>)}
-                </select>
-                <input 
-                  type="number" 
-                  placeholder="Day" 
-                  min="1" 
-                  max="31" 
-                  value={day}
-                  onChange={(e) => setDay(e.target.value)}
-                  className="px-4 py-3.5 rounded-xl bg-[#0B1120] border border-gray-700 text-white text-center outline-none focus:border-purple-500" 
-                />
-                <input 
-                  type="number" 
-                  placeholder="Year" 
-                  min="1900" 
-                  max="2026" 
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                  className="px-4 py-3.5 rounded-xl bg-[#0B1120] border border-gray-700 text-white text-center outline-none focus:border-purple-500" 
-                />
-              </div>
+            {/* Email */}
+            <div className="w-full flex flex-col">
+              <label className="block text-xs font-bold text-gray-400 mb-2.5">EMAIL ADDRESS *</label>
+              <input 
+                type="email" 
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                style={inputStyle}
+                className="w-full rounded-xl bg-[#0B1120] border border-gray-700 text-sm text-white placeholder:text-sm placeholder:text-gray-500 focus:border-purple-500 outline-none transition-all box-border"
+              />
             </div>
 
+            {/* Password */}
+            <div className="w-full flex flex-col">
+              <label className="block text-xs font-bold text-gray-400 mb-2.5">PASSWORD *</label>
+              <input 
+                type="password" 
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                style={inputStyle}
+                className="w-full rounded-xl bg-[#0B1120] border border-gray-700 text-sm text-white placeholder:text-sm placeholder:text-gray-500 focus:border-purple-500 outline-none transition-all box-border"
+              />
+            </div>
+
+            {/* Confirm Password */}
+            <div className="w-full flex flex-col">
+              <label className="block text-xs font-bold text-gray-400 mb-2.5">CONFIRM PASSWORD *</label>
+              <input 
+                type="password" 
+                placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                style={inputStyle}
+                className="w-full rounded-xl bg-[#0B1120] border border-gray-700 text-sm text-white placeholder:text-sm placeholder:text-gray-500 focus:border-purple-500 outline-none transition-all box-border"
+              />
+            </div>
+
+            {/* Error */}
             {error && (
-              <div className="text-red-500 text-sm font-semibold text-center mt-[-10px]">
+              <div className="text-red-500 text-xs font-semibold text-center">
                 {error}
               </div>
             )}
 
-            <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold transition-all shadow-[0_0_25px_rgba(124,58,237,0.4)]">
-              Continue
+            {/* Button */}
+            <button 
+              type="submit" 
+              className="w-full !py-2.5 mt-1 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold transition-all shadow-[0_0_25px_rgba(124,58,237,0.4)]"
+            >
+              Sign Up
             </button>
           </form>
 
@@ -121,4 +152,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default CreateAccount;
